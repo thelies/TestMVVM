@@ -32,11 +32,22 @@ class ItemsViewModel {
             .map { results in
                 return [ItemSection(model: "", items: results.toArray())]
         }
+//        let realm = try! Realm()
+//        let objects = realm.objects(Item.self)
+//        return Observable.just([ItemSection(model: "", items: objects.toArray())])
     }
     
     func createItem() -> Observable<Item> {
         let realm = try! Realm()
         let item = Item()
+        let wordVM = WordsViewModel()
+        for _ in 1 ... 20 {
+            let word = wordVM.createWord()
+            word.subscribe(onNext: { newWord in
+                item.words.append(newWord)
+            })
+            .dispose()
+        }
         try! realm.write {
             item.id = (realm.objects(Item.self).max(ofProperty: "id") ?? 0) + 1
             item.title = "Item \(item.id)"

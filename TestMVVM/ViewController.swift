@@ -13,12 +13,13 @@ import RxDataSources
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    let viewModel = ItemsViewModel()
+    var viewModel: ItemsViewModel!
     let dataSource = RxTableViewSectionedAnimatedDataSource<ItemSection>()
     let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = ItemsViewModel()
         configureDataSource()
         bindViewModel()
         
@@ -58,7 +59,10 @@ class ViewController: UIViewController {
             cell.titleLabel.text = item.title
             cell.likeButton.rx.tap.asObservable()
                 .subscribe(onNext: { [weak self] _ in
-                    self?.viewModel.likeItem(item: item)
+                    let wordViewModel = WordsViewModel()
+                    let word = wordViewModel.getWordById(id: (item.id * 20 - 10))
+                    wordViewModel.likeWord(word: word!)
+//                    self?.viewModel.likeItem(item: item)
                 })
                 .disposed(by: cell.bag)
             item.rx.observe(Bool.self, "isLiked")

@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  Word.swift
 //  TestMVVM
 //
 //  Created by Le Ngoc HOAN on 6/9/17.
@@ -11,19 +11,17 @@ import RxRealm
 import RealmSwift
 import RxDataSources
 
-class Item: Object {
+class Word: Object {
     dynamic var id: Int = 0
     dynamic var title: String = ""
     dynamic var isLiked: Bool = false
-    
-    let words = List<Word>()
     
     override class func primaryKey() -> String? {
         return "id"
     }
 }
 
-extension Item: IdentifiableType {
+extension Word: IdentifiableType {
     var identity: Int {
         return self.isInvalidated ? 0 : id
     }
