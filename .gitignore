@@ -1,0 +1,10 @@
+# CocoaPods
+Pods/
+*.xcbkptlist
+
+# Other
+*.xcscmblueprint
+*.moved-aside
+*.xcuserstate
+*.xccheckout
+
